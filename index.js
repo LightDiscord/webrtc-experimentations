@@ -1,5 +1,11 @@
 console.log(':wave: world!');
 
+const elements = {
+    host: document.querySelector('#host'),
+    connect: document.querySelector('#connect'),
+    connectInput: document.querySelector('#connect-input'),
+}
+
 const connection = new RTCPeerConnection();
 
 const gotOffer = (desc) => {
@@ -19,7 +25,7 @@ connection.onaddstream = gotRemoteStream;
 
 const createOffer = (connection) => {
     return connection.createOffer().then((description) => {
-        console.log('got description', description);
+        console.log('got description', description, description.toJSON());
 
         connection.setLocalDescription(description).then(() => {
             console.log({
@@ -29,4 +35,11 @@ const createOffer = (connection) => {
     })
 }
 
-createOffer(connection);
+elements.host.addEventListener('click', () => {
+    createOffer(connection);
+});
+
+elements.connect.addEventListener('click', () => {
+    // connection.setRemoteDescription(elements.connectInput.value);
+    
+})
